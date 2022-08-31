@@ -1,3 +1,2 @@
 #!/bin/bash
-echo "Current Working Directory is $PATH"
-
+Current Working Directory is $PATH
