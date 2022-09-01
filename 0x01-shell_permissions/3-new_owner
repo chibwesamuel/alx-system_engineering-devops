@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo chown betty -v ~/hello
+sudo chown betty -v ~/root/hello
