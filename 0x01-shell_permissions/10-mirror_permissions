@@ -1,2 +1,2 @@
 #!/bin/bash
-setfacl --set-file hello /olleh
+setfacl --set-file hello olleh
