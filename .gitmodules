@@ -1,0 +1,3 @@
+[submodule "0x01-shell_permissions/0x01-shell_permissions/alx-system_engineering-devops"]
+	path = 0x01-shell_permissions/0x01-shell_permissions/alx-system_engineering-devops
+	url = https://github.com/chibwesamuel/alx-system_engineering-devops.git
