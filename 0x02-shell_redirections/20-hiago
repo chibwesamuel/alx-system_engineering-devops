@@ -1,2 +1,2 @@
 #!/bin/bash
-read -p   word |  | tr cC
+tr -d "cC"
