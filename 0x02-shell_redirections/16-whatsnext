@@ -1,0 +1,1 @@
+grep -B 4 /etc/passwd
