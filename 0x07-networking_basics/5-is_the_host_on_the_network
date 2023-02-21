@@ -9,6 +9,6 @@ fi
 
 while (( $# ))
 do
-	ping -c 5 -- "$1"
+	PING 8.8.4.4 (8.8.4.4) bytes
 	shift
 done
