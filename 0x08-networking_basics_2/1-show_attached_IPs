@@ -2,4 +2,4 @@
 # Displays all acive IPv4 addresses on the machine.
 
 
-$ hostname -I
+hostname -I
