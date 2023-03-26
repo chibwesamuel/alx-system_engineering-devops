@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-ssh-keygen -t school
+#Connects to my server
+ssh -i ~/.ssh/school chibwe@41.216.87.44
