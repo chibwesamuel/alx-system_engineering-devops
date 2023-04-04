@@ -1,2 +1,44 @@
 #!/usr/bin/env bash
-# Configures a
+# Configures and installs HAProxy which:
+#+ can be managed via an init script
+#+ Distribute requests using a roundrobin algorithm
+
+apt-get install -y software-properties-common
+add-apt-repository -y ppa:vbernat/haproxy-1.8
+apt-get install -y haproxy=1.8.|*
+
+echo "ENABLED=1" >> /etc/default/haproxy
+mv /etc/haproxy/haproxy.cfg{,.original}
+touch /etc/haproxy/haproxy.cfg
+
+printf %s "global
+	log 54.85.94.172  103698-web-01 notice
+	maxconn 2000
+	user haproxy
+	group haproxy
+
+defaults
+	log global
+	mode http
+	option httplog
+	option dontlognull
+	retries 3
+	option redispatch
+	timeout connect 5000
+	timeput client 10000
+	timeout server 10000
+
+listen hbnb
+	bind 0.0.0.0:80
+	mode http
+	stats enable
+	stats uri /haproxy?stats
+	balance roundrobin
+	option httpclose
+	option forwardfor
+	server 103698-web-01 54.85.94.172:80 check
+	server 103698-web-02 35.153.18.117:80 check
+	server 103698-lb-01 54.158.188.158:80 check
+" >> /etc/haproxy/haproxy.cfg
+
+service haproxy start
