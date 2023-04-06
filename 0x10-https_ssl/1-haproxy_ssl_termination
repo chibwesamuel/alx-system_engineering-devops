@@ -1,0 +1,36 @@
+global
+	log	/dev/log local0
+	maxconn	2048
+	user	haproxy
+	group	haproxy
+	tune.ssl.default-dh-param 2048
+
+defaults
+	log	global
+	mode	http
+	option	dontlognull
+	option	httplog
+	option	redispatch
+	option	forwardfor
+	retries	3
+	timeout	connect	5000
+	timeout	client	10000
+	timeout	server	10000
+	option	http-server-close
+
+frontend www-https
+	bind	0.0.0.0:443 /etc/haproxy/certs/www.smchibwe.tech.pem
+	reqadd	X-Forwarded-Proto:\ https
+	acl	letsencrypt-acl path_beg /.well-known/acme-challenge
+	use_backend	letsencrypt-backend if letsencrypt-acl
+	default_backend www-backend
+
+backend www-backend
+	balance	roundrobin
+	redirect	scheme https if !{ ssl_fc}
+	server 103698-web-01 54.85.94.172 check
+	server 103698-web-02 35.153.18.117 check
+	server 103698-lb-01 54.158.188.158 check
+
+backend letsencrypt-backend
+	server letsencrypt 127.0.0.154321
