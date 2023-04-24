@@ -1,4 +1,10 @@
 #!/usr/bin/python3
+"""
+This script retrieves information about an employee's TODO list progress
+from the provided REST API.
+
+Usage: python todo.py EMPLOYEE_ID
+"""
 import requests
 import sys
 
