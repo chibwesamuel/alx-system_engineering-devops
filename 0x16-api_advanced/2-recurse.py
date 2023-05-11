@@ -27,5 +27,5 @@ def recurse(subreddit, hot_list=[]):
         hot_list.append(c.get("data").get("title"))
 
     if after is not None:
-        return recurse(subreddit, hot_list, after, count)
-    return hot_list
+        return (recurse(subreddit, hot_list, after, count))
+    return (hot_list)
