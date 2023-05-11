@@ -4,6 +4,7 @@ Queries the Reddit API and prints requested data
 """
 import requests
 
+
 def top_ten(subreddit):
     """rints the titles of the first 10 hot posts listed"""
     url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
