@@ -1,22 +1,15 @@
 # Fixes an Apache 500 error
 
-file { '/etc/apache2/sites-available/000-default.conf':
-	ensure  => present,
-	content => '
-	<VirtualHost *:80>
-		ServerAdmin webmaster@localhost
-		DocumentRoot /var/www/html
-		ErrorLog ${APACHE_LOG_DIR}/error.log
-		CustomLog ${APACHE_LOG_DIR}/access.log combined
-	</VirtualHost>
-	',
-	owner   => 'root',
-	group   => 'root',
-	mode    => '0644',
-	notify  => Service['apache2'],  # Add the notify attribute to trigger service restart
+file { '/var/www/html/wp-settings.php':
+  ensure  => present,
+  content => inline_template('<%= File.read("/var/www/html/wp-settings.php").gsub("phpp", "php") %>'),
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
+  require => Exec['fix-wordpress'],  # Ensure the file is modified after the fix is applied
 }
 
-service { 'apache2':
-	ensure  => running,
-	enable  => true,  # Ensure the service is enabled on system boot
+exec { 'fix-wordpress':
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => '/usr/local/bin/:/bin/',
 }
